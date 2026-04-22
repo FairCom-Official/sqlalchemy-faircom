@@ -159,6 +159,27 @@ sqlalchemy-faircom/
 - SQLAlchemy 1.4+
 - Works with any SQLAlchemy-based application or tool
 
+## Configurable Timeout
+
+By default the connector has **no timeout** — it waits as long as needed, which is required for large table exports (9M+ rows). You can also set an explicit timeout in seconds.
+
+```
+# No timeout (default) — recommended for large exports
+faircom://ADMIN:ADMIN@host:8080/mydb?protocol=http
+
+# 1-hour timeout
+faircom://ADMIN:ADMIN@host:8080/mydb?protocol=http&timeout=3600
+```
+
+Or via the DB-API directly:
+
+```python
+from faircom_jsonapi.dbapi import connect
+
+conn = connect(host='host', port=8080, username='ADMIN', password='ADMIN',
+               database='mydb', protocol='http', timeout=3600)
+```
+
 ## Pagination Support
 
 FairCom uses **TOP/SKIP** syntax (T-SQL style) instead of the standard LIMIT/OFFSET. This driver automatically converts SQLAlchemy pagination:

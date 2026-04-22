@@ -3,11 +3,15 @@ Setup for FairCom JSON API SQLAlchemy dialect
 """
 from setuptools import setup, find_packages
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name="sqlalchemy-faircom",
-    version='0.1.20',
+    version='0.1.21',
     description="SQLAlchemy dialect for FairCom Database via JSON API",
-    long_description="Pure Python SQLAlchemy dialect for FairCom Database using the JSON/REST API",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Custom Implementation",
     packages=find_packages(exclude=['tests', 'tests.*']),
     install_requires=[
