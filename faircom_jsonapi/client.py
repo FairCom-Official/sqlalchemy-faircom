@@ -12,13 +12,15 @@ class FairComClientException(Exception):
 class FairComClient:
     """Client for FairCom Database JSON API"""
     
-    def __init__(self, url, debug=False):
+    def __init__(self, url, debug=False, timeout=None):
         self.url = url
         self.isopen = False
         self.id = 0
         self.api_version = "1.0"
         self.debug = debug
         self.auth_token = None
+        # None means no timeout (wait indefinitely); default was 30s
+        self.timeout = timeout
 
     def _make_request(self, method, api, params):
         """Make a JSON API request"""
@@ -41,7 +43,7 @@ class FairComClient:
         if self.debug:
             print(json.dumps(request))
 
-        result = requests.post(self.url, json=request, timeout=30, verify=False)
+        result = requests.post(self.url, json=request, timeout=self.timeout, verify=False)
 
         if self.debug:
             print(result.text)

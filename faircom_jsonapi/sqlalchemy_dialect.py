@@ -152,7 +152,18 @@ class FairComJSONDialect(default.DefaultDialect):
         # Handle protocol from query string or default to http
         protocol = opts.pop('protocol', 'http')
         opts['protocol'] = protocol
-        
+
+        # Handle timeout from query string (e.g. ?timeout=3600)
+        # None means no timeout (wait indefinitely), suitable for large exports
+        raw_timeout = opts.pop('timeout', None)
+        if raw_timeout is not None:
+            try:
+                opts['timeout'] = int(raw_timeout)
+            except (ValueError, TypeError):
+                opts['timeout'] = None
+        else:
+            opts['timeout'] = None
+
         return [[], opts]
     
     def do_rollback(self, dbapi_connection):

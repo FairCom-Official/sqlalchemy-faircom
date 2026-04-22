@@ -277,7 +277,7 @@ class Connection:
     """DB-API 2.0 compliant connection"""
     
     def __init__(self, host, port=8080, username='ADMIN', password='ADMIN', 
-                 database='ctreeSQL', protocol='http', debug=False):
+                 database='ctreeSQL', protocol='http', debug=False, timeout=None):
         self.host = host
         self.port = port
         self.username = username
@@ -285,9 +285,10 @@ class Connection:
         self.database = database
         self.protocol = protocol
         self.debug = debug
+        self.timeout = timeout
         
         url = f"{protocol}://{host}:{port}/api/db"
-        self.client = FairComClient(url, debug=debug)
+        self.client = FairComClient(url, debug=debug, timeout=timeout)
         self.client.login(username, password)
 
     def cursor(self):
@@ -308,7 +309,7 @@ class Connection:
 
 
 def connect(host, port=8080, username='ADMIN', password='ADMIN', 
-            database='ctreeSQL', protocol='http', debug=False):
+            database='ctreeSQL', protocol='http', debug=False, timeout=None):
     """
     Create a connection to the FairCom database via JSON API
     
@@ -320,5 +321,7 @@ def connect(host, port=8080, username='ADMIN', password='ADMIN',
         database: Database name (default 'ctreeSQL')
         protocol: 'http' or 'https' (default 'http')
         debug: Enable debug output
+        timeout: HTTP read timeout in seconds (default None = no timeout).
+                 Use a large value (e.g. 3600) for large table exports.
     """
-    return Connection(host, port, username, password, database, protocol, debug)
+    return Connection(host, port, username, password, database, protocol, debug, timeout)

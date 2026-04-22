@@ -347,7 +347,7 @@ Enable caching in Superset to improve dashboard performance:
 
 ## Version Compatibility
 
-- **sqlalchemy-faircom**: 0.1.19+
+- **sqlalchemy-faircom**: 0.1.20+
 - **SQLAlchemy**: 1.4+
 - **Apache Superset**: 2.0+
 - **Python**: 3.7+
@@ -365,4 +365,4 @@ For Apache Superset issues:
 ---
 
 **Last Updated**: January 2026  
-**Connector Version**: 0.1.19
+**Connector Version**: 0.1.20
